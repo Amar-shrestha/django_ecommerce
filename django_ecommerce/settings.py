@@ -134,3 +134,22 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+from jinja2 import Environment
+
+env = Environment(extensions=['jinja2_time.TimeExtension'])
+
+# Timezone 'local', default format -> "2015-12-10"
+template = env.from_string("{% now 'local' %}")
+
+# Timezone 'utc', explicit format -> "Thu, 10 Dec 2015 15:49:01"
+template = env.from_string("{% now 'utc', '%a, %d %b %Y %H:%M:%S' %}")
+
+# Timezone 'Europe/Berlin', explicit format -> "CET +0100"
+template = env.from_string("{% now 'Europe/Berlin', '%Z %z' %}")
+
+# Timezone 'utc', explicit format -> "2015"
+template = env.from_string("{% now 'utc', '%Y' %}")
+
+template.render()
