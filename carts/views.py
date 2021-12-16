@@ -3,6 +3,8 @@ from store.models import Product
 from .models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.http import HttpResponse
+
 def _cart_id(request):
 	cart = request.session.session_key
 	
@@ -12,6 +14,12 @@ def _cart_id(request):
 
 
 def add_cart(request, product_id):
+	color = request.POST['color']
+	size = request.POST['size']
+	# return HttpResponse(color+ ' ' +size)
+	print(color,size)
+	# exit()
+
 	product = Product.objects.get(id=product_id) # get the product
 	try:
 		cart = Cart.objects.get(cart_id=_cart_id(request)) # get the cart using the card_id present in the session
